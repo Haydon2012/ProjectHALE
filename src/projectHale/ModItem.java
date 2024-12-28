@@ -10,14 +10,14 @@ public class ModItem {
     public static void load() {
         iron = new Item("iron", Color.valueOf("797171")) {{
             hardness = 1;
-            cost = 0.3f;
+            cost = 2.6f;
             alwaysUnlocked = true;
             flammability = 0f;
             explosiveness = 0f;
             radioactivity = 0f;
         }};
         chip_basic = new Item("chip_basic", Color.valueOf("a1db5e")) {{
-            cost = 0.5f;
+            cost = 2.8f;
             alwaysUnlocked = true;
             flammability = 0.2f;
             explosiveness = 0.02f;

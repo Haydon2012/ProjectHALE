@@ -6,4 +6,4 @@ description: "a Mindustry mod with tons of codes..."
 version: 1.0Beta
 minGameVersion: 146
 java: true
-hidden: true
+hidden: false
