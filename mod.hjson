@@ -1,7 +1,7 @@
 displayName: "Project:HALE"
 name: "projectHale"
 author: "Haydon2012"
-main: "projectHale.projectHaleMod"
+main: "projectHale.projectHale"
 description: "a Mindustry mod with tons of codes..."
 version: 1.0Beta
 minGameVersion: 146
