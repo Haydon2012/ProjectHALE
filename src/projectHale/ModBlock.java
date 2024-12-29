@@ -1,16 +1,10 @@
 package projectHale;
 
-import arc.graphics.Color;
-import mindustry.content.Blocks;
 import mindustry.content.Fx;
 import mindustry.content.Items;
-import mindustry.gen.Building;
 import mindustry.gen.Sounds;
-import mindustry.mod.Mod;
 import mindustry.type.Category;
-import mindustry.type.Item;
 import mindustry.type.ItemStack;
-import mindustry.world.Block;
 import mindustry.world.blocks.defense.Wall;
 import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.meta.BuildVisibility;
@@ -49,7 +43,7 @@ public class ModBlock {
             health=120;
             canOverdrive=true;
             chip_stamper.consumePower(0.50f);
-            chip_stamper.consumeItems(new ItemStack[]{new ItemStack(ModItem.iron,1),new ItemStack(Items.silicon,2)});
+            chip_stamper.consumeItems(new ItemStack(ModItem.iron,1),new ItemStack(Items.silicon,2));
         }};
     }
 }

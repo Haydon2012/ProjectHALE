@@ -2,6 +2,7 @@ package projectHale;
 
 import arc.*;
 import arc.util.*;
+import mindustry.content.Items;
 import mindustry.game.EventType.*;
 import mindustry.mod.*;
 import mindustry.ui.dialogs.*;
@@ -28,6 +29,7 @@ public class projectHale extends Mod{
     }
     public void loadContent(){
         Log.info("Loading projectHale items...");
+        Items.load();
         ModItem.load();
         ModBlock.load();
     }
