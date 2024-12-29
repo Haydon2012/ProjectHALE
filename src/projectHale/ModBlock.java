@@ -29,7 +29,7 @@ public class ModBlock {
         }};
         //factories
         chip_stamper = new GenericCrafter("chip_stamper"){{
-            requirements(Category.crafting, new ItemStack[]{new ItemStack(ModItem.iron, 50),new ItemStack(Items.copper,40)});
+            requirements(Category.crafting, new ItemStack[]{new ItemStack(ModItem.iron, 50)});
             craftEffect = Fx.smeltsmoke;
             outputItem = new ItemStack(ModItem.chip_basic, 2);
             craftTime = 40f;
@@ -42,8 +42,8 @@ public class ModBlock {
             itemCapacity=10;
             health=120;
             canOverdrive=true;
-            chip_stamper.consumePower(0.50f);
-            chip_stamper.consumeItems(new ItemStack(ModItem.iron,1),new ItemStack(Items.silicon,3));
+            consumePower(0.50f);
+            consumeItems(new ItemStack(ModItem.iron,1),new ItemStack(ModItem.silicon_base,3));
         }};
     }
 }
