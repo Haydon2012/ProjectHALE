@@ -18,10 +18,10 @@ public class projectHale extends Mod{
             Time.runTask(10f, () -> {
                 BaseDialog dialog = new BaseDialog("welcome!");
                 dialog.cont.image(Core.atlas.find("projecthale-ICON")).pad(30f).row();
+                dialog.addCloseButton();
                 dialog.cont.add("-Welcome to [project:HALE]-").row();
                 dialog.cont.add("[yellow]warning:Beta Version!").row();
                 dialog.cont.add("[sky]Tks for your supporting!").row();
-                dialog.cont.button("->continue->", dialog::hide).size(300f, 50f);
                 dialog.show();
             });
         });

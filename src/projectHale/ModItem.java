@@ -19,7 +19,7 @@ public class ModItem {
         chip_basic = new Item("chip_basic", Color.valueOf("a1db5e")) {{
             cost = 2.8f;
             alwaysUnlocked = true;
-            flammability = 0.2f;
+            flammability = 0.1f;
             explosiveness = 0.02f;
             radioactivity = 0.2f;
         }};
