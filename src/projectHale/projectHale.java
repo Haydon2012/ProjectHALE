@@ -28,6 +28,7 @@ public class projectHale extends Mod{
         });
     }
     public void loadContent(){
+        ModPlanet.load();
         Log.info("Loading projectHale items...");
         ModItem.load();
         Log.info("Loading projectHale blocks...");
