@@ -84,14 +84,15 @@ public class ModBlock {
         //generator
         wind_turbine=new PowerGenerator("wind_turbine"){{
             requirements(Category.power, new ItemStack[]{new ItemStack(ModItem.iron, 10),new ItemStack(ModItem.copper,3)});
-            outputsPower=true;
+            this.outputsPower=true;
             connectedPower=true;
             hasPower=true;
-            ambientSound = Sounds.hum;
-            ambientSoundVolume = 0.06F;
-            powerProduction=4f;
-            attribute=Attribute.water;
+            this.ambientSound = Sounds.hum;
+            this.ambientSoundVolume = 0.06F;
+            this.powerProduction=6F;
+            attribute=Attribute.heat;
             size=2;
+            this.floating = true;
             this.drawer = new DrawMulti(new DrawBlock[]{new DrawDefault(), new DrawBlurSpin("-rotator", 5.4F) {
                 {
                     this.blurThresh = 0.01F;
