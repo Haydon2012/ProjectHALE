@@ -53,12 +53,12 @@ public class ModPlanet {
                 this.atmosphereRadOut = 0.3F;
                 this.tidalLock = true;
                 this.orbitSpacing = 3F;
-                this.totalRadius += 8F;
+                this.totalRadius += 50F;
                 this.lightSrcTo = 0.5F;
                 this.lightDstFrom = 0.2F;
                 this.clearSectorOnLose = true;
-                this.defaultCore = Blocks.coreShard;
-                this.iconColor = Color.valueOf("ff9266");
+                this.defaultCore = ModBlock.core_basic;
+                this.iconColor = Color.valueOf("116464");
                 this.hiddenItems.addAll(Items.erekirItems).removeAll(Items.serpuloItems);
                 this.enemyBuildSpeedMultiplier = 1F;
                 this.allowLaunchToNumbered = true;
@@ -68,13 +68,13 @@ public class ModPlanet {
                     r.waveTeam = Team.blue;
                     r.placeRangeCheck = false;
                     r.showSpawns = true;
-                    r.fog = true;
+                    r.fog = false;
                     r.staticFog = true;
                     r.lighting = false;
                     r.coreDestroyClear = true;
                     r.onlyDepositCore = true;
                 };
-                this.unlockedOnLand.add(Blocks.coreShard);
+                this.unlockedOnLand.add(ModBlock.core_basic);
             }
         };
     }

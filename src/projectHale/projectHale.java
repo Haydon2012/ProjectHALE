@@ -29,10 +29,14 @@ public class projectHale extends Mod{
     }
     public void loadContent(){
         ModPlanet.load();
+        //ModTech.load();
+        ModUnit.load();
         Log.info("Loading projectHale items...");
         ModItem.load();
+        ModBullet.load();
         Log.info("Loading projectHale blocks...");
         ModBlock.load();
+
     }
 
 }
