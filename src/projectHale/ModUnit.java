@@ -1,25 +1,23 @@
 package projectHale;
 
-import arc.func.Prov;
+import arc.graphics.Color;
 import mindustry.ai.UnitCommand;
 import mindustry.ai.types.BuilderAI;
+import mindustry.ai.types.FlyingAI;
 import mindustry.content.Fx;
-import mindustry.content.UnitTypes;
 import mindustry.entities.abilities.ForceFieldAbility;
-import mindustry.entities.abilities.RepairFieldAbility;
 import mindustry.entities.bullet.BasicBulletType;
-import mindustry.gen.Nulls;
-import mindustry.gen.Unit;
+import mindustry.entities.part.HoverPart;
 import mindustry.gen.UnitEntity;
-import mindustry.gen.UnitEntityLegacyGamma;
 import mindustry.type.UnitType;
 import mindustry.type.Weapon;
+import mindustry.world.meta.BlockFlag;
 
 import static mindustry.Vars.tilePayload;
-import static mindustry.gen.Nulls.unit;
 
 public class ModUnit {
     public static UnitType HaleI;
+    public static UnitType drone;
 
     static void load(){
         HaleI=new UnitType("HaleI") {{
@@ -64,6 +62,42 @@ public class ModUnit {
                 };
             }});
             this.defaultCommand = UnitCommand.assistCommand;
+            constructor = UnitEntity::create;
+        }};
+        drone=new UnitType("drone"){{
+            aiController = FlyingAI::new;
+            isEnemy=false;
+            armor = 1f;
+            health = 75;
+            speed = 7f;
+            range=35f;
+            rotateSpeed = 5f;
+            accel = 0.4f;
+            drag = 0.04f;
+            flying = true;
+            engineOffset = 8f;
+            engineSize = 1f;
+            faceTarget = true;
+            hitSize = 15f;
+            buildSpeed = 3f;
+            lowAltitude = false;
+            buildBeamOffset = 5;
+            ammoCapacity = 140;
+            for(final float f : new float[]{-3.0F, 3.0F}) {
+                this.parts.add(new HoverPart() {
+                    {
+                        this.x = 3.9F;
+                        this.y = f;
+                        this.mirror = true;
+                        this.radius = 6.0F;
+                        this.phase = 90.0F;
+                        this.stroke = 2.0F;
+                        this.layerOffset = -0.001F;
+                        this.color = Color.valueOf("71918a");
+                    }
+                });
+            }
+            this.targetFlags = new BlockFlag[]{BlockFlag.battery,BlockFlag.generator, null};
             constructor = UnitEntity::create;
         }};
     }

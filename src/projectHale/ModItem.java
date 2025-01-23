@@ -1,7 +1,7 @@
 package projectHale;
+
 import arc.graphics.Color;
 import mindustry.type.Item;
-import mindustry.type.ItemStack;
 
 public class ModItem {
     public static Item iron;
@@ -9,6 +9,7 @@ public class ModItem {
     public static Item silicon_base;
     public static Item copper;
     public static Item sand;
+    public static Item combustible_ice;
 
     public static void load() {
         iron = new Item("iron", Color.valueOf("797171")) {{
@@ -20,7 +21,7 @@ public class ModItem {
             radioactivity = 0f;
         }};
         copper = new Item("copper", Color.valueOf("dabd50")) {{
-            hardness = 1;
+            hardness = 2;
             cost = 3f;
             alwaysUnlocked = true;
             flammability = 0f;
@@ -32,6 +33,13 @@ public class ModItem {
             alwaysUnlocked = true;
             flammability = 0.02f;
             explosiveness = 0f;
+            radioactivity = 0f;
+        }};
+        combustible_ice = new Item("combustible_ice", Color.valueOf("d8d0d0")) {{
+            hardness = 3;
+            alwaysUnlocked = true;
+            flammability = 1.5f;
+            explosiveness = 0.01f;
             radioactivity = 0f;
         }};
         silicon_base = new Item("silicon_base", Color.valueOf("414141")) {{
