@@ -1,6 +1,7 @@
 package projectHale;
 
 import arc.graphics.Color;
+import mindustry.content.Liquids;
 import mindustry.type.Liquid;
 
 public class ModLiquid {

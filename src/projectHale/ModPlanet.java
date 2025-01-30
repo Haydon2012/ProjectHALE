@@ -5,6 +5,7 @@ import mindustry.content.Items;
 import mindustry.game.Team;
 import mindustry.graphics.g3d.*;
 import mindustry.maps.planet.SerpuloPlanetGenerator;
+import mindustry.type.Item;
 import mindustry.type.Planet;
 import mindustry.world.meta.Attribute;
 
@@ -23,7 +24,7 @@ public class ModPlanet {
         frel = new Planet("Frel", sun, 1.0F, 2) {
             {
                 generator = new SerpuloPlanetGenerator();
-                this.meshLoader = () -> new HexMesh(this, 5);
+                this.meshLoader = () -> new HexMesh(this, 7);
                 this.cloudMeshLoader = () -> new MultiMesh(new GenericMesh[]{new HexSkyMesh(this, 3, 0.15F, 0.14F, 5, Color.valueOf("708165").a(0.75F), 2, 0.42F, 1.0F, 0.43F), new HexSkyMesh(this, 3, 0.6F, 0.15F, 5, Color.valueOf("aaaabb").a(0.75F), 2, 0.42F, 1.2F, 0.45F)});
                 this.alwaysUnlocked = true;
                 this.landCloudColor = Color.valueOf("3ba7de");
@@ -34,19 +35,21 @@ public class ModPlanet {
                 this.atmosphereRadOut = 0.3F;
                 this.tidalLock = true;
                 this.orbitSpacing = 3F;
-                this.totalRadius += 50F;
+                this.totalRadius += 70F;
+                this.radius=1f;
                 this.lightSrcTo = 0.5F;
                 this.lightDstFrom = 0.2F;
                 this.clearSectorOnLose = true;
                 this.defaultCore = ModBlock.core_basic;
                 this.iconColor = Color.valueOf("116464");
-                this.hiddenItems.addAll(Items.erekirItems).removeAll(Items.serpuloItems);
+                this.hiddenItems.addAll(Items.erekirItems).removeAll(ModItem.frelItems);
+                hiddenItems.removeAll(Items.serpuloItems);
                 this.enemyBuildSpeedMultiplier = 1F;
                 this.allowLaunchToNumbered = true;
                 this.updateLighting = false;
                 this.defaultAttributes.set(Attribute.water, 0.2F);
                 this.ruleSetter = (r) -> {
-                    r.waveTeam = Team.blue;
+                    r.waveTeam = Team.crux;
                     r.placeRangeCheck = false;
                     r.showSpawns = true;
                     r.fog = false;

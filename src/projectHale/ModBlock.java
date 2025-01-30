@@ -2,16 +2,27 @@ package projectHale;
 
 import arc.graphics.Color;
 import arc.struct.Seq;
+import mindustry.content.Blocks;
 import mindustry.content.Fx;
+import mindustry.content.Items;
+import mindustry.content.Liquids;
+import mindustry.entities.Effect;
+import mindustry.entities.abilities.MoveEffectAbility;
 import mindustry.entities.bullet.ArtilleryBulletType;
 import mindustry.entities.bullet.BasicBulletType;
+import mindustry.entities.bullet.ExplosionBulletType;
 import mindustry.entities.bullet.MissileBulletType;
+import mindustry.entities.effect.MultiEffect;
+import mindustry.entities.effect.WaveEffect;
 import mindustry.entities.part.DrawPart;
 import mindustry.entities.part.HaloPart;
 import mindustry.entities.pattern.ShootBarrel;
 import mindustry.gen.Sounds;
+import mindustry.graphics.Pal;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
+import mindustry.type.Weapon;
+import mindustry.type.unit.MissileUnitType;
 import mindustry.world.blocks.defense.Wall;
 import mindustry.world.blocks.defense.turrets.ItemTurret;
 import mindustry.world.blocks.distribution.Router;
@@ -22,6 +33,8 @@ import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.blocks.storage.Unloader;
 import mindustry.world.blocks.units.UnitFactory;
+import mindustry.world.consumers.ConsumeLiquid;
+import mindustry.world.consumers.ConsumeLiquidBase;
 import mindustry.world.draw.*;
 import mindustry.world.meta.Attribute;
 import mindustry.world.meta.BlockGroup;
@@ -30,6 +43,7 @@ import mindustry.world.meta.BuildVisibility;
 import static mindustry.type.ItemStack.with;
 
 public class ModBlock {
+    static Attribute attribute;
     public static Wall iron_wall;
     public static Wall iron_wall_large;
     public static Wall iron_wall_advanced;
@@ -38,13 +52,13 @@ public class ModBlock {
     public static Unloader basic_unloader;
     public static ConsumeGenerator wind_turbine;
     public static CoreBlock core_basic;
-    static Attribute attribute;
     public static UnitFactory coreI;
     public static ItemTurret octuple;
     public static LiquidRouter small_tank;
     public static Router router;
     public static ItemTurret missile;
     public static GenericCrafter silicon_smelter;
+    public static ItemTurret rocketI;
 
     public static void load() {
         //walls
@@ -186,7 +200,6 @@ public class ModBlock {
                     health=10;
                 }
             }});
-
             shoot = new ShootBarrel();
             this.recoil = 0.25F;
             this.shootY = 3.0F;
@@ -282,6 +295,117 @@ public class ModBlock {
                 });
             }};
         }};
+        rocketI=new ItemTurret("rocketI"){{
+            this.requirements(Category.turret, ItemStack.with(new Object[]{Items.silicon, 450, Items.graphite, 400, Items.tungsten, 500, Items.oxide, 100, Items.carbide, 200}));
+            health=70;
+            size=1;
+            this.ammo(new Object[]{ModItem.chip_basic, new BasicBulletType(0.0F, 1.0F) {{
+                    this.shootEffect = Fx.shootSmall;
+                    this.smokeEffect = Fx.shootSmokeMissile;
+                    this.ammoMultiplier = 0.5F;
+                    this.spawnUnit = new MissileUnitType("smallMissile") {{
+                            this.speed = 6F;
+                            this.maxRange = 6.0F;
+                            this.lifetime = 33.0F;
+                            this.outlineColor = Pal.darkOutline;
+                            this.engineColor = this.trailColor = Pal.lightTrail;
+                            this.engineLayer = 110.0F;
+                            this.engineSize = 1F;
+                            this.engineOffset = 5F;
+                            this.rotateSpeed = 0.5F;
+                            this.trailLength = 20;
+                            this.missileAccelTime = 50.0F;
+                            this.lowAltitude = true;
+                            this.loopSound = Sounds.missileTrail;
+                            this.loopSoundVolume = 0.6F;
+                            this.deathSound = Sounds.explosion;
+                            this.targetAir = false;
+                            this.fogRadius = 2F;
+                            this.health = 100F;
+                            this.weapons.add(new Weapon() {
+                                {
+                                    this.shootCone = 360.0F;
+                                    this.mirror = false;
+                                    this.reload = 1.0F;
+                                    deathExplosionEffect = Fx.massiveExplosion;
+                                    this.shootOnDeath = true;
+                                    this.shake = 10.0F;
+                                    this.bullet = new ExplosionBulletType(100F, 10F) {
+                                        {
+                                            this.hitColor = Pal.lightishOrange;
+                                            this.shootEffect = new MultiEffect(new Effect[]{Fx.massiveExplosion, Fx.scatheExplosion, Fx.scatheLight, new WaveEffect() {
+                                                {
+                                                    this.lifetime = 10.0F;
+                                                    this.strokeFrom = 4.0F;
+                                                    this.sizeTo = 12.0F;
+                                                }
+                                            }});
+                                            this.collidesAir = false;
+                                            this.buildingDamageMultiplier = 0.3F;
+                                            this.ammoMultiplier = 1.0F;
+                                            this.fragLifeMin = 0.1F;
+                                            this.fragBullets = 7;
+                                            this.fragBullet = new ArtilleryBulletType(3.4F, 50.0F) {
+                                                {
+                                                    this.buildingDamageMultiplier = 0.3F;
+                                                    this.drag = 0.02F;
+                                                    this.hitEffect = Fx.massiveExplosion;
+                                                    this.despawnEffect = Fx.scatheSlash;
+                                                    this.knockback = 0.8F;
+                                                    this.lifetime = 23.0F;
+                                                    this.width = this.height = 18.0F;
+                                                    this.collidesTiles = false;
+                                                    this.splashDamageRadius = 40.0F;
+                                                    this.splashDamage = 80.0F;
+                                                    this.backColor = this.trailColor = this.hitColor = Pal.redLight;
+                                                    this.frontColor = Color.white;
+                                                    this.smokeEffect = Fx.shootBigSmoke2;
+                                                    this.despawnShake = 7.0F;
+                                                    this.lightRadius = 30.0F;
+                                                    this.lightColor = Pal.redLight;
+                                                    this.lightOpacity = 0.5F;
+                                                    this.trailLength = 20;
+                                                    this.trailWidth = 3.5F;
+                                                    this.trailEffect = Fx.none;
+                                                }
+                                            };
+                                        }
+                                    };
+                                }
+                            });
+                            this.abilities.add(new MoveEffectAbility() {
+                                {
+                                    this.effect = Fx.missileTrailSmoke;
+                                    this.rotation = 180.0F;
+                                    this.y = -9.0F;
+                                    this.color = Color.grays(0.6F).lerp(Pal.lightTrail, 0.2F).a(0.3F);
+                                    this.interval = 4F;
+                                }
+                            });
+                        }
+                    };
+            }}});
+            this.recoil = 0.5F;
+            this.fogRadiusMultiplier = 0.01F;
+            this.coolantMultiplier = 12F;
+            this.shootSound = Sounds.missileLaunch;
+            this.minWarmup = 0.94F;
+            this.shootWarmupSpeed = 0.04F;
+            this.targetAir = true;
+            this.targetUnderBlocks = false;
+            this.shake = 1F;
+            this.ammoPerShot = 4;
+            this.maxAmmo = 30;
+            this.shootY = -0.1F;
+            this.outlineColor = Pal.lightTrail;
+            this.envEnabled |= 2;
+            this.reload = 600.0F;
+            this.range = 135.0F;
+            this.shootCone = 1.0F;
+            this.scaledHealth = 70F;
+            this.rotateSpeed = 1F;
+            this.coolant = (ConsumeLiquidBase)this.consume(new ConsumeLiquid(ModLiquid.natural_water, 3F));
+        }};
         //liquid
         small_tank=new LiquidRouter("small_tank"){{
             this.requirements(Category.liquid, ItemStack.with(new Object[]{ModItem.iron, 60}));
@@ -293,5 +417,6 @@ public class ModBlock {
             this.outputsLiquid=true;
         }};
         //drill
+
     }
 }
